@@ -48,7 +48,6 @@ public class Mic3Service {
             response.setCode(0);
 
         } catch(Exception e) {
-            e.printStackTrace();
             response.setCode(-1);
             return response;
         }

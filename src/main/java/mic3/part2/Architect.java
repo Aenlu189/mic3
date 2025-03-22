@@ -1,8 +1,8 @@
-package model.mic3.part2;
+package mic3.part2;
 
 import java.util.ArrayList;
-import model.mic3.part4.Project;
-import model.mic3.part4.ProjectNumber;
+import mic3.part4.Project;
+import mic3.part4.ProjectNumber;
 
 public class Architect {
     private int id;
@@ -21,7 +21,7 @@ public class Architect {
         this.projects = projects;
     }
 
-    public ArrayList<Project> projects() {
+    public ArrayList<Project> getProjects() {
         return projects;
     }
 

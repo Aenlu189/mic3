@@ -1,4 +1,4 @@
-package model.mic3;
+package mic3;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.context.annotation.Primary;
@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component;
 
 public class JerseyConfig extends ResourceConfig {
     public JerseyConfig(){
-        register(serviceEndpoints.class);
+        register(ServiceEndpoints.class);
     }
 }

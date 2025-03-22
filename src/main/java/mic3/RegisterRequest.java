@@ -1,4 +1,4 @@
-package model.mic3;
+package mic3;
 
 public class RegisterRequest {
     private int id;

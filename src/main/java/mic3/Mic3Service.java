@@ -1,7 +1,7 @@
-package model.mic3;
+package mic3;
 
-import model.mic3.part2.Architect;
-import model.mic3.part2.Architects;
+import mic3.part2.Architect;
+import mic3.part2.Architects;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -9,120 +9,127 @@ import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import model.mic3.part4.Project;
+import mic3.part4.Project;
 
 public class Mic3Service {
     private static final String PATH = "src/main/resources/Architects.json";
-    Response response = new Response();
-
-    Architects architects;
 
     public Response register(RegisterRequest c) {
+        Response response = new Response();
+
         try {
-            Architects architect = deserialize();
-        } catch(Exception e) {
-            response.setResponse(-1);
-            return response;
-        }
+            Architects architects;
+            architects = deserialize();
 
-        if (architects.getArchitects().size() > 2) {
-            response.setResponse(3);
-            return response;
-        }
+            if (architects == null) {
+                architects = new Architects();
+                architects.setArchitects(new ArrayList<>());
+            } else if (architects.getArchitects() == null) {
+                architects.setArchitects(new ArrayList<>());
+            }
 
-        for (int i = 0; i< architects.getArchitects().size(); i++) {
-            if (architects.getArchitects().get(i).getId() == c.getId()) {
-                response.setResponse(4);
+            if (architects.getArchitects().size() > 2) {
+                response.setCode(3);
                 return response;
             }
-        }
-        ArrayList<Architect> newList = new ArrayList<>();
-        Architect newArchitect = new Architect();
-        newArchitect.setId(c.getId());
-        newList.add(newArchitect);
-        architects.setArchitects(newList);
 
-        try {
+            for (int i = 0; i < architects.getArchitects().size(); i++) {
+                if (architects.getArchitects().get(i).getId() == c.getId()) {
+                    response.setCode(4);
+                    return response;
+                }
+            }
+            
+            Architect newArchitect = new Architect();
+            newArchitect.setId(c.getId());
+            architects.getArchitects().add(newArchitect);
+
             serialize(architects);
+            response.setCode(0);
+
         } catch(Exception e) {
-            response.setResponse(-1);
+            e.printStackTrace();
+            response.setCode(-1);
             return response;
         }
 
-        response.setResponse(0);
         return response;
     }
 
     public Response assign(AssignRequest c) {
+        Response response = new Response();
+
         try {
-            Architects architects = deserialize();
+            Architects architects;
+            architects = deserialize();
 
             if (architects == null) {
-                response.setResponse(5);
+                response.setCode(5);
                 return response;
             }
 
             Architect targetArchitect = null;
-            for (Architect architect : architects.getArchitects()) {
+            for (Architect architect: architects.getArchitects()) {
                 if (architect.getId() == c.getId()) {
                     targetArchitect = architect;
                 }
             }
 
             if (targetArchitect == null) {
-                response.setResponse(6);
+                response.setCode(6);
                 return response;
             }
 
-            if (targetArchitect.projects() == null) {
+            if (targetArchitect.getProjects() == null) {
                 targetArchitect.setProjects(new ArrayList<>());
             }
             if (targetArchitect.getProjectNumbers() == null) {
                 targetArchitect.setProjectNumbers(new ArrayList<>());
             }
 
-            for (Project existingProject: targetArchitect.projects()) {
+            for (Project existingProject: targetArchitect.getProjects()) {
                 if (existingProject.getProjectNumber() == c.getProjectNumber()) {
-                    response.setResponse(7);
+                    response.setCode(7);
                     return response;
                 }
             }
 
             if (targetArchitect.getProjectNumbers().size() >= 2) {
-                response.setResponse(3);
+                response.setCode(3);
                 return response;
             }
 
             Project project = new Project();
             project.setProjectNumber(c.getProjectNumber());
 
-            targetArchitect.projects().add(project);
+            targetArchitect.getProjects().add(project);
             targetArchitect.getProjectNumbers().add(c.getProjectNumber());
 
             serialize(architects);
 
-            response.setResponse(0);
+            response.setCode(0);
             return response;
         } catch (Exception e) {
-            response.setResponse(-1);
+            response.setCode(-1);
             return response;
         }
     }
 
     public Response check(CheckRequest c) {
+        Response response = new Response();
         try {
             Architects architects = deserialize();
 
             if (architects == null) {
-                response.setResponse(-1);
+                response.setCode(-1);
                 return response;
             }
 
 
             boolean projectFound = false;
             for (Architect architect : architects.getArchitects()) {
-                if (architect.projects() != null) {
-                    for (Project project : architect.projects()) {
+                if (architect.getProjects() != null) {
+                    for (Project project : architect.getProjects()) {
                         if (project.getProjectNumber() == c.getProjectNumber()) {
                             projectFound = true;
                             break;
@@ -132,14 +139,14 @@ public class Mic3Service {
             }
 
             if (projectFound == false) {
-                response.setResponse(8);
+                response.setCode(8);
                 return response;
             }
 
-            response.setResponse(0);
+            response.setCode(0);
             return response;
         } catch (Exception e) {
-            response.setResponse(-1);
+            response.setCode(-1);
             return response;
         }
     }

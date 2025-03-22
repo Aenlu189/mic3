@@ -1,13 +1,15 @@
-package model.mic3;
+package mic3;
 
 public class Response {
     private int code;
 
-    public void setResponse(int code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
-    public int getResponse() {
+    public int getCode() {
         return code;
     }
+
+
 }

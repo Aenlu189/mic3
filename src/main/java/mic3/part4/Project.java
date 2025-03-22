@@ -1,8 +1,6 @@
-package model.mic3;
+package mic3.part4;
 
-import model.mic3.part4.ProjectNumber;
-
-public class CheckRequest {
+public class Project {
     private ProjectNumber projectNumber;
 
     public void setProjectNumber(ProjectNumber projectNumber) {

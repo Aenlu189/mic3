@@ -1,4 +1,4 @@
-package model.mic3.part4;
+package mic3.part4;
 
 public enum ProjectNumber {
     P_1,

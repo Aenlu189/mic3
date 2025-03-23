@@ -8,9 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ServiceEndpointTests {
     void registerNullPostRequest(String uri) throws Exception {
         HttpPostWrapper client = new HttpPostWrapper();
-        String requestBody = null;
 
-        Response response = client.execute(uri, requestBody);
+        Response response = client.execute(uri, null);
         assertEquals(-1, response.getCode());
     }
 

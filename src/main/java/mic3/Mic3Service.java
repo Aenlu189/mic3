@@ -153,14 +153,10 @@ public class Mic3Service {
     private Architects deserialize() throws Exception {
         Path filePath = Paths.get(PATH);
         if (Files.exists(filePath)) {
-            FileInputStream fstream = new FileInputStream(PATH);
-            DataInputStream in = new DataInputStream(fstream);
-            BufferedReader bf = new BufferedReader(new InputStreamReader(in));
-            String jsonString4 = "", strLine = null;
-            while((strLine = bf.readLine()) != null) jsonString4 += strLine;
-            ObjectMapper mapper = new ObjectMapper();
-            Architects architect = mapper.readValue(jsonString4, Architects.class);
-            return architect;
+            try (BufferedReader reader = Files.newBufferedReader(filePath)) {
+                ObjectMapper mapper = new ObjectMapper();
+                return mapper.readValue(reader, Architects.class);
+            }
         } else {
             return null;
         }

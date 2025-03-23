@@ -6,7 +6,7 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/architect")
+@Path("/architects")
 public class ServiceEndpoints {
     @POST
     @Path("/register")

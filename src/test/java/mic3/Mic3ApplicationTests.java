@@ -10,7 +10,7 @@ class Mic3ApplicationTests {
     void contextLoads() throws Exception {
         ServiceEndpointTests tests = new ServiceEndpointTests();
 
-        String baseUri = "http://localhost:8080/architect";
+        String baseUri = "http://localhost:8080/architects";
 
         tests.assignNonExistingFilePostRequest(baseUri + "/assign");
 

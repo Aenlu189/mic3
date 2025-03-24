@@ -22,6 +22,7 @@ public class ServiceEndpoints {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response assign(AssignRequest c) {
+        System.out.println("Architects Register called with: " + c);
         Mic3Service s = new Mic3Service();
         return s.assign(c);
     }
